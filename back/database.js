@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const logger = require('./logger');
+const { database: dbConnectionData } = require('./config');
 
 mongoose.connection.on('open', () => logger.info('Connected to DB'));
 mongoose.connection.on('close', () => logger.info('Disconnected from DB'));
@@ -12,12 +13,13 @@ process.on('SIGINT', () => {
   });
 });
 
-exports.connect = ({
-  protocol = '',
-  url = '',
-  username = '',
-  password = '',
-}) => {
+exports.connect = () => {
+  const {
+    protocol = '',
+    url = '',
+    username = '',
+    password = '',
+  } = dbConnectionData;
   const connectionString = (() => {
     if (!username || !password) return `${protocol}://${url}`;
     return `${protocol}://${username}:${password}@${url}`;
