@@ -1,5 +1,5 @@
 exports.BadRequestErrorResponse = (message = 'Bad Request') => ({
-  status: 400,
+  statusCode: 400,
   message,
 });
 
