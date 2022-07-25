@@ -1,20 +1,5 @@
-const morgan = require('morgan');
-const { v4: uuid } = require('uuid');
-
-const logger = require('../logger');
-
-const { logErrorOnRequest } = require('./logger');
-
-const reqIdSetter = (req, _, next) => {
-  req.id = uuid();
-  next();
-};
-
-morgan.token('id', (req) => req.id);
-const reqLogger = morgan(
-  ':remote-addr [:date[iso]] :id - ":method :url" - :status',
-  { stream: { write: (message) => logger.info(message.trim()) } },
-);
+const logger = require('../../logger');
+const { logErrorOnRequest } = require('../logger');
 
 const notFoundMiddleware = (_, __, next) => {
   next({ statusCode: 404, message: 'Not Found' });
@@ -45,4 +30,4 @@ const errorHandlers = [
   errorHandlerMiddleware,
 ];
 
-module.exports = { reqIdSetter, reqLogger, errorHandlers };
+module.exports = errorHandlers;
