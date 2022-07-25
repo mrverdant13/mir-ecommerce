@@ -4,7 +4,7 @@ const {
   jwt: { secret },
 } = require('../../../../config');
 const { UnauthorizedErrorResponse } = require('../../../responses');
-const { User } = require('../users');
+const { User } = require('../users/entity');
 
 const bearerPrefix = 'Bearer ';
 
