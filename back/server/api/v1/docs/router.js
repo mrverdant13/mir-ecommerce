@@ -2,7 +2,7 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 
 const { port } = require('../../../../config');
-const { authPaths } = require('../auth/docs');
+const { authPaths, authSchemas, authTag } = require('../auth/docs');
 const { healthPaths, healthSchemas, healthTag } = require('../health/docs');
 const { usersSchemas } = require('../users/docs');
 
@@ -18,13 +18,14 @@ const openApiDoc = {
       url: `http://localhost:${port}/api/v1`,
     },
   ],
-  tags: [healthTag],
+  tags: [authTag, healthTag],
   paths: {
     ...authPaths,
     ...healthPaths,
   },
   components: {
     schemas: {
+      ...authSchemas,
       ...healthSchemas,
       ...usersSchemas,
     },

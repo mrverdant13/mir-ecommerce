@@ -1,4 +1,4 @@
-const { hash } = require('bcryptjs');
+const { compare, hash } = require('bcryptjs');
 const mongoose = require('mongoose');
 const { isEmail } = require('validator');
 
@@ -50,6 +50,11 @@ userSchema.methods.toJSON = function () {
   const hiddenFieldNames = Object.keys(hiddenFields);
   hiddenFieldNames.forEach((fieldName) => delete userJson[fieldName]);
   return userJson;
+};
+
+// eslint-disable-next-line func-names
+userSchema.methods.verifyPassword = async function (value) {
+  return compare(value, this.password);
 };
 
 // eslint-disable-next-line func-names
