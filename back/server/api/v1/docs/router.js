@@ -29,6 +29,14 @@ const openApiDoc = {
       ...healthSchemas,
       ...usersSchemas,
     },
+    securitySchemes: {
+      Bearer: {
+        type: 'http',
+        scheme: 'bearer',
+        in: 'header',
+        bearerFormat: 'JWT',
+      },
+    },
   },
 };
 

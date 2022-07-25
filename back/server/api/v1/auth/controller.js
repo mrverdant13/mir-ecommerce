@@ -31,3 +31,5 @@ exports.logIn = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.getProfile = (req, res) => res.status(200).json(req.me);
