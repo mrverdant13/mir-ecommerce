@@ -1,4 +1,4 @@
-const { User } = require('../users');
+const { User } = require('../users/entity');
 
 exports.signUp = async (req, res, next) => {
   try {
