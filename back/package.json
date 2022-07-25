@@ -1,0 +1,9 @@
+{
+  "name": "ecommerce-back",
+  "version": "1.0.0",
+  "description": "Ecommerce backend",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC"
+}
