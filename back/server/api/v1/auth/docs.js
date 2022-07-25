@@ -2,6 +2,8 @@ const { requestBodyDoc } = require('../docs/req-body');
 const {
   simpleCreatedResBodyDoc,
   fallbackInternalServerErrorResBodyDoc,
+  createdResBodyDoc,
+  simpleUnauthorizedResBodyDoc,
 } = require('../docs/res-bodies');
 
 exports.authTag = {
@@ -15,7 +17,7 @@ exports.authPaths = {
       tags: [this.authTag.name],
       summary: 'Sign up',
       description: 'Create user profile (non-admin).',
-      operationId: '/auth/signup',
+      operationId: '/auth/sign-up',
       requestBody: requestBodyDoc(
         'New user profile data.',
         '#/components/schemas/NewUser',
@@ -28,5 +30,52 @@ exports.authPaths = {
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
+  },
+  '/auth/log-in': {
+    post: {
+      tags: [this.authTag.name],
+      summary: 'Log in',
+      description: 'Log in user and get a JWT.',
+      operationId: '/auth/log-in',
+      requestBody: requestBodyDoc(
+        'User credentials.',
+        '#/components/schemas/UserCredentials',
+      ),
+      responses: {
+        ...createdResBodyDoc('User logged in.', {
+          allOf: [
+            { $ref: '#/components/schemas/User' },
+            {
+              type: 'object',
+              properties: {
+                jwt: {
+                  type: 'string',
+                  format: 'JWT',
+                },
+              },
+              required: ['jwt'],
+            },
+          ],
+        }),
+        ...simpleUnauthorizedResBodyDoc('Invalid credentials.'),
+        ...fallbackInternalServerErrorResBodyDoc,
+      },
+    },
+  },
+};
+
+exports.authSchemas = {
+  UserCredentials: {
+    type: 'object',
+    properties: {
+      email: {
+        type: 'string',
+        format: 'email',
+      },
+      password: {
+        type: 'string',
+      },
+    },
+    required: ['email', 'password'],
   },
 };

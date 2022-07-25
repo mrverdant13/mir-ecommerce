@@ -11,17 +11,18 @@ exports.simpleOkResBodyDoc = (description, bodySchemaRef) => ({
   },
 });
 
-exports.simpleCreatedResBodyDoc = (description, bodySchemaRef) => ({
+exports.createdResBodyDoc = (description, schema) => ({
   201: {
     description,
-    content: {
-      'application/json': {
-        schema: {
-          $ref: bodySchemaRef,
-        },
-      },
-    },
+    content: { 'application/json': { schema } },
   },
+});
+
+exports.simpleCreatedResBodyDoc = (description, schemaRef) =>
+  this.createdResBodyDoc(description, { $ref: schemaRef });
+
+exports.simpleUnauthorizedResBodyDoc = (description) => ({
+  401: { description },
 });
 
 exports.fallbackInternalServerErrorResBodyDoc = {
