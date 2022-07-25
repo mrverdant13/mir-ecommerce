@@ -1,6 +1,8 @@
 const { compare, hash } = require('bcryptjs');
 const mongoose = require('mongoose');
 const { isEmail } = require('validator');
+const { defaultAdmin } = require('../../../../config');
+const logger = require('../../../../logger');
 
 const passwordFieldName = 'password';
 
@@ -65,6 +67,24 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+const User = mongoose.model('User', userSchema);
+
+async function createDefaultAdminIfNotExists() {
+  const maybeAdmin = await User.findOne({ isAdmin: true });
+  if (maybeAdmin) return;
+  logger.info('No admin found.');
+  const newAdmin = new User({
+    name: defaultAdmin.name,
+    lastName: defaultAdmin.lastName,
+    email: defaultAdmin.email,
+    password: defaultAdmin.password,
+    isAdmin: true,
+  });
+  await newAdmin.save();
+  logger.info('Default admin created.');
+}
+createDefaultAdminIfNotExists();
+
 module.exports = {
-  User: mongoose.model('User', userSchema),
+  User,
 };
