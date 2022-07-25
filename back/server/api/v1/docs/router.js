@@ -30,6 +30,14 @@ const openApiDoc = {
       ...usersSchemas,
     },
   },
+  securitySchemes: {
+    Bearer: {
+      type: 'http',
+      scheme: 'bearer',
+      in: 'header',
+      bearerFormat: 'JWT',
+    },
+  },
 };
 
 const router = express.Router();
