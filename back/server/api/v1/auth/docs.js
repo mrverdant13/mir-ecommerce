@@ -4,6 +4,8 @@ const {
   fallbackInternalServerErrorResBodyDoc,
   createdResBodyDoc,
   simpleUnauthorizedResBodyDoc,
+  simpleOkResBodyDoc,
+  defaultUnauthorizedResBodyDoc,
 } = require('../docs/res-bodies');
 
 exports.authTag = {
@@ -58,6 +60,23 @@ exports.authPaths = {
           ],
         }),
         ...simpleUnauthorizedResBodyDoc('Invalid credentials.'),
+        ...fallbackInternalServerErrorResBodyDoc,
+      },
+    },
+  },
+  '/auth/me': {
+    get: {
+      tags: [this.authTag.name],
+      summary: 'Get user profile',
+      description: 'Get user profile.',
+      operationId: '/auth/me',
+      security: [{ Bearer: [] }],
+      responses: {
+        ...simpleOkResBodyDoc(
+          'User profile retrieved.',
+          '#/components/schemas/User',
+        ),
+        ...defaultUnauthorizedResBodyDoc,
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
