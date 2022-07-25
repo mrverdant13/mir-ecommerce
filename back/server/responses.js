@@ -8,6 +8,11 @@ exports.UnauthorizedErrorResponse = (message = 'Unauthorized') => ({
   message,
 });
 
+exports.ForbiddenErrorResponse = (message = 'Forbidden') => ({
+  statusCode: 403,
+  message,
+});
+
 exports.InternalServerErrorResponse = (message = 'Internal Server Error') => ({
   statusCode: 500,
   message,
