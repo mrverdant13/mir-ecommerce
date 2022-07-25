@@ -21,12 +21,18 @@ exports.me = async (req, _, next) => {
     if (!authHeader.startsWith(bearerPrefix)) return next(unauthorizedResponse);
     const jwt = authHeader.substring(bearerPrefix.length);
     if (!jwt) return next(unauthorizedResponse);
-    const { id } = await verify(jwt, secret);
+    const { id } = verify(jwt, secret);
     const me = await User.findById(id);
     if (!me) return next(unauthorizedResponse);
     req.me = me;
     return next();
   } catch (err) {
+    if (err.message === 'jwt malformed') {
+      return next(UnauthorizedErrorResponse('Invalid access token'));
+    }
+    if (err.kind === 'ObjectId') {
+      return next(UnauthorizedErrorResponse('Invalid access data'));
+    }
     return next(err);
   }
 };
