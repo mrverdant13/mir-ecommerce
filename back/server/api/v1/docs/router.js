@@ -2,7 +2,9 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 
 const { port } = require('../../../../config');
+const { authPaths } = require('../auth/docs');
 const { healthPaths, healthSchemas, healthTag } = require('../health/docs');
+const { usersSchemas } = require('../users/docs');
 
 const openApiDoc = {
   openapi: '3.0.0',
@@ -18,11 +20,13 @@ const openApiDoc = {
   ],
   tags: [healthTag],
   paths: {
+    ...authPaths,
     ...healthPaths,
   },
   components: {
     schemas: {
       ...healthSchemas,
+      ...usersSchemas,
     },
   },
 };
