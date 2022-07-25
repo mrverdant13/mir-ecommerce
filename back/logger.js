@@ -6,8 +6,10 @@ const errorFileTransport = new transports.File({
   filename: 'logs/error.log',
   level: 'error',
 });
+
 const combinedConsoleTransport = new transports.Console({
-  format: format.simple(),
+  format: format.combine(format.colorize({ all: true }), format.simple()),
+  level: 'debug',
 });
 
 // Always bulk error logs to file.
