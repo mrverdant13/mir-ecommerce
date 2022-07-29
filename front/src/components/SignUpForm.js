@@ -19,6 +19,7 @@ import {
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-mui';
 
+import { useAuthContext } from '../context/auth';
 import { useSignUpContext } from '../context/signUp';
 
 const emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
@@ -28,9 +29,10 @@ export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
   const { loading, error, done, signUp } = useSignUpContext();
+  const { user } = useAuthContext();
   useEffect(() => {
-    if (done) navigate('/');
-  }, [done, navigate]);
+    if (done || user !== null) navigate('/');
+  }, [done, user, navigate]);
   return (
     <Box
       sx={{
