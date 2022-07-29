@@ -1,9 +1,18 @@
 import React from 'react';
 
+import Typography from '@mui/material/Typography';
+
 export default function NotFound() {
   return (
-    <div>
-      <h1>No pudimos encontrar la página que estás buscando</h1>
-    </div>
+    <Typography
+      m="auto"
+      maxWidth="500px"
+      textAlign="center"
+      variant="h3"
+      component="h1"
+      gutterBottom
+    >
+      No pudimos encontrar la página que estás buscando
+    </Typography>
   );
 }
