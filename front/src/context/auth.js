@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 import {
   logIn as logInReq,
+  me as meReq,
   removeAuthHeader,
   setAuthHeader,
 } from '../api/auth';
@@ -60,6 +61,19 @@ export const AuthProvider = ({ children }) => {
     setJwt(null);
   };
 
+  const refreshProfile = async () => {
+    console.debug('refreshProfile');
+    setLoading(true);
+    setError(null);
+    try {
+      const { data: user } = await meReq();
+      setUser(user);
+    } catch (err) {
+      setError(err.message ?? 'Unexpected error');
+    }
+    setLoading(false);
+  };
+
   return (
     <authContext.Provider
       value={{
@@ -68,6 +82,7 @@ export const AuthProvider = ({ children }) => {
         error,
         logIn,
         logOut,
+        refreshProfile,
       }}
     >
       {children}

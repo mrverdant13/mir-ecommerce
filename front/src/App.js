@@ -8,6 +8,7 @@ import { AuthProvider } from './context/auth';
 const Home = lazy(() => import('./pages/Home'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const SignUpPage = lazy(() => import('./pages/SignUpPage'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/sign-up" element={<SignUpPage />} />
+            <Route path="/me" element={<ProfilePage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
