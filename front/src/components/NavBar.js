@@ -8,6 +8,7 @@ import LogInButton from './LogInButton';
 import LogOutButton from './LogOutButton';
 
 const signUpRoute = '/sign-up';
+const profileRoute = '/me';
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export default function NavBar() {
   const { user } = useAuthContext();
 
   const showSignUpButton = location.pathname !== signUpRoute;
+  const showProfileButton = location.pathname !== profileRoute;
 
   return (
     <AppBar position="static">
@@ -35,7 +37,14 @@ export default function NavBar() {
               )}
             </>
           ) : (
-            <LogOutButton />
+            <>
+              {showProfileButton && (
+                <Button color="inherit" onClick={() => navigate(profileRoute)}>
+                  Perfil
+                </Button>
+              )}
+              <LogOutButton />
+            </>
           )}
         </Toolbar>
       </Container>
