@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import NavBar from './components/NavBar';
 const Home = lazy(() => import('./pages/Home'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+const SignUpPage = lazy(() => import('./pages/SignUpPage'));
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Suspense fallback={<LoadingPagePlaceholder />}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
