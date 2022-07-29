@@ -1,12 +1,18 @@
-import { AppBar, Box, Button, Container, Toolbar } from '@mui/material';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+import { AppBar, Box, Button, Container, Toolbar } from '@mui/material';
+
+import { useAuthContext } from '../context/auth';
+import LogInButton from './LogInButton';
+import LogOutButton from './LogOutButton';
 
 const signUpRoute = '/sign-up';
 
 export default function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useAuthContext();
 
   const showSignUpButton = location.pathname !== signUpRoute;
 
@@ -18,10 +24,18 @@ export default function NavBar() {
             Home
           </Button>
           <Box sx={{ flexGrow: 1 }} />
-          {showSignUpButton && (
-            <Button color="inherit" onClick={() => navigate(signUpRoute)}>
-              Registrarme
-            </Button>
+          {user === null ? (
+            <>
+              {' '}
+              <LogInButton />
+              {showSignUpButton && (
+                <Button color="inherit" onClick={() => navigate(signUpRoute)}>
+                  Registrarme
+                </Button>
+              )}
+            </>
+          ) : (
+            <LogOutButton />
           )}
         </Toolbar>
       </Container>
