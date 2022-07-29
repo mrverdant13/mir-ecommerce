@@ -29,6 +29,17 @@ export const logIn = async ({ email, password }) => {
   }
 };
 
+export const me = async () => {
+  try {
+    return await apiClient.get('/auth/me');
+  } catch (e) {
+    const status = e.response?.status;
+    if (status === 401) throw new Error('User not logged in');
+    if (status === 500) throw new Error('Unexpected error');
+    throw e;
+  }
+};
+
 let reqInterceptor = null;
 let resInterceptor = null;
 
