@@ -115,7 +115,8 @@ exports.productsPaths = {
                 photo: {
                   type: 'string',
                   format: 'binary',
-                  description: 'Product photo',
+                  description:
+                    'Product photo. Only JPEG and PNG images are supported.',
                 },
               },
               required: ['photo'],
