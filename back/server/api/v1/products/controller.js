@@ -24,3 +24,12 @@ exports.createProduct = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.listProductGroups = async (req, res, next) => {
+  try {
+    const groups = await Product.distinct('groups');
+    return res.status(200).json(groups);
+  } catch (err) {
+    return next(err);
+  }
+};
