@@ -21,7 +21,27 @@ exports.productsPaths = {
       summary: 'List products',
       description: 'Retrieve products.',
       operationId: '/products.get',
-      parameters: [...paginatorQueryParamsDocs],
+      parameters: [
+        ...paginatorQueryParamsDocs,
+        {
+          name: 'group',
+          in: 'query',
+          description: 'Filter by group',
+          required: false,
+          schema: {
+            type: 'string',
+          },
+        },
+        {
+          name: 'category',
+          in: 'query',
+          description: 'Filter by category',
+          required: false,
+          schema: {
+            type: 'string',
+          },
+        },
+      ],
       responses: {
         ...okResBodyDoc('Products retrieved.', {
           type: 'object',
