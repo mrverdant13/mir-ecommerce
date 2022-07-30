@@ -126,6 +126,35 @@ exports.productsPaths = {
       },
     },
   },
+  '/products/groups/{group}/categories': {
+    get: {
+      tags: [this.productsTag.name],
+      summary: 'List product categories by group',
+      description: 'Retrieve product categories by group.',
+      operationId: '/products/groups/:group/categories.get',
+      parameters: [
+        {
+          name: 'group',
+          in: 'path',
+          description: 'Group to retrieve categories.',
+          required: true,
+          schema: {
+            type: 'string',
+          },
+        },
+      ],
+      responses: {
+        ...okResBodyDoc('Product categories retrieved.', {
+          type: 'array',
+          description: 'Product categories.',
+          items: {
+            type: 'string',
+          },
+        }),
+        ...fallbackInternalServerErrorResBodyDoc,
+      },
+    },
+  },
 };
 
 exports.productsSchemas = {
