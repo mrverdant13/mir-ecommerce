@@ -28,6 +28,11 @@ const fields = {
     required: true,
     minlength: 1,
   },
+  photos: {
+    type: [String],
+    required: true,
+    default: [],
+  },
 };
 
 const productSchema = new mongoose.Schema(fields, { timestamps: true });
