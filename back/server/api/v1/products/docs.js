@@ -83,6 +83,49 @@ exports.productsPaths = {
       },
     },
   },
+  '/products/groups/{group}': {
+    put: {
+      tags: [this.productsTag.name],
+      summary: 'Update products group',
+      description: 'Update products group.',
+      operationId: '/products/groups/:group.put',
+      security: [{ Bearer: [] }],
+      parameters: [
+        {
+          name: 'group',
+          in: 'path',
+          description: 'Group to update.',
+          required: true,
+          schema: {
+            type: 'string',
+          },
+        },
+      ],
+      requestBody: {
+        description: 'New group data.',
+        required: true,
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                newGroup: {
+                  type: 'string',
+                  description: 'New group.',
+                },
+              },
+            },
+          },
+        },
+      },
+      responses: {
+        ...okResBodyDoc('Group updated for all products.'),
+        ...defaultUnauthorizedResBodyDoc,
+        ...defaultForbiddenResBodyDoc,
+        ...fallbackInternalServerErrorResBodyDoc,
+      },
+    },
+  },
 };
 
 exports.productsSchemas = {
