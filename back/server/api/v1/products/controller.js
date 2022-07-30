@@ -33,3 +33,18 @@ exports.listProductGroups = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.updateGroupForAllProducts = async (req, res, next) => {
+  try {
+    const { group: currentGroup } = req.params;
+    const { newGroup } = req.body;
+    console.log(currentGroup, newGroup);
+    await Product.updateMany(
+      { groups: currentGroup },
+      { $set: { 'groups.$': newGroup } },
+    );
+    return res.status(200).json({ message: 'Group updated for all products.' });
+  } catch (err) {
+    return next(err);
+  }
+};
