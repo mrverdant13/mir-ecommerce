@@ -1,4 +1,6 @@
+const path = require('path');
 const { getPaginationParams } = require('../../../middlewares/paginator');
+const { NotFoundErrorResponse } = require('../../../responses');
 const { Product } = require('./entity');
 
 exports.listProducts = async (req, res, next) => {
@@ -29,6 +31,22 @@ exports.createProduct = async (req, res, next) => {
     const product = new Product(body);
     const createdProduct = await product.save();
     return res.status(201).json(createdProduct);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.addProductPhoto = async (req, res, next) => {
+  try {
+    const { productId } = req.params;
+    const { file } = req;
+    const product = await Product.findById(productId);
+    if (!product) {
+      return next(NotFoundErrorResponse('Product not found.'));
+    }
+    product.photos.push(path.normalize(file.path).replace(/\\/g, '/'));
+    await product.save();
+    return res.status(201).json({ message: 'Photo added.' });
   } catch (err) {
     return next(err);
   }

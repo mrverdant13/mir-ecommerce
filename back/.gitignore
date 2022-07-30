@@ -5,3 +5,6 @@ package-lock.json
 
 # Logs
 /logs
+
+# Uploads
+/uploads

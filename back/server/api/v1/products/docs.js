@@ -85,6 +85,54 @@ exports.productsPaths = {
       },
     },
   },
+  '/products/{productId}/photo': {
+    post: {
+      tags: [this.productsTag.name],
+      summary: 'Add product photo',
+      description: 'Add product photo.',
+      operationId: '/products/productId/photo.post',
+      security: [{ Bearer: [] }],
+      parameters: [
+        {
+          name: 'productId',
+          in: 'path',
+          description: 'Product ID',
+          required: true,
+          schema: {
+            type: 'string',
+            format: 'objectID',
+          },
+        },
+      ],
+      requestBody: {
+        description: 'Product photo data.',
+        required: true,
+        content: {
+          'multipart/form-data': {
+            schema: {
+              type: 'object',
+              properties: {
+                photo: {
+                  type: 'string',
+                  format: 'binary',
+                  description:
+                    'Product photo. Only JPEG and PNG images are supported.',
+                },
+              },
+              required: ['photo'],
+            },
+          },
+        },
+      },
+      responses: {
+        ...simpleCreatedResBodyDoc('Product photo added.'),
+        ...defaultUnauthorizedResBodyDoc,
+        ...defaultForbiddenResBodyDoc,
+        ...defaultBadRequestResBodyDoc,
+        ...fallbackInternalServerErrorResBodyDoc,
+      },
+    },
+  },
   '/products/groups': {
     get: {
       tags: [this.productsTag.name],
@@ -209,6 +257,13 @@ exports.productsSchemas = {
         minlength: 1,
         items: {
           type: 'string',
+        },
+      },
+      photos: {
+        type: 'array',
+        items: {
+          type: 'string',
+          format: 'path',
         },
       },
       createdAt: {
