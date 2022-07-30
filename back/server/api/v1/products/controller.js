@@ -4,9 +4,18 @@ const { Product } = require('./entity');
 exports.listProducts = async (req, res, next) => {
   try {
     const { limit, offset } = getPaginationParams(req);
+    const { group, category } = req.query;
+    const filter = {};
+    if (group != null) {
+      filter.groups = group;
+    }
+    if (category != null) {
+      filter.categories = category;
+    }
+    console.log(filter);
     const [products, productsCount] = await Promise.all([
-      Product.find().skip(offset).limit(limit),
-      Product.countDocuments(),
+      Product.find(filter).skip(offset).limit(limit),
+      Product.countDocuments(filter),
     ]);
     return res.status(200).json({ total: productsCount, products });
   } catch (err) {
