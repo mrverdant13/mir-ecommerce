@@ -6,6 +6,7 @@ const {
   listProducts,
   listProductGroups,
   updateGroupForAllProducts,
+  listProductCategoriesByGroup,
 } = require('./controller');
 
 const router = express.Router();
@@ -13,5 +14,6 @@ const router = express.Router();
 router.route('/').get(paginator, listProducts).post(me, isAdmin, createProduct);
 router.route('/groups').get(listProductGroups);
 router.route('/groups/:group').put(me, isAdmin, updateGroupForAllProducts);
+router.route('/groups/:group/categories').get(listProductCategoriesByGroup);
 
 module.exports = router;
