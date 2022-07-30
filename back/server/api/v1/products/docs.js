@@ -65,6 +65,24 @@ exports.productsPaths = {
       },
     },
   },
+  '/products/groups': {
+    get: {
+      tags: [this.productsTag.name],
+      summary: 'List product groups',
+      description: 'Retrieve product groups.',
+      operationId: '/products/groups.get',
+      responses: {
+        ...okResBodyDoc('Product groups retrieved.', {
+          type: 'array',
+          description: 'Product groups.',
+          items: {
+            type: 'string',
+          },
+        }),
+        ...fallbackInternalServerErrorResBodyDoc,
+      },
+    },
+  },
 };
 
 exports.productsSchemas = {
