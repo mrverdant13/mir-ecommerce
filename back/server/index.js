@@ -23,6 +23,9 @@ app.use(reqLogger);
 app.use('/api', apiV1);
 app.use('/api/v1', apiV1);
 
+// Static files
+app.use('/uploads', express.static('uploads'));
+
 // Handle errors.
 app.use(...errorHandlers);
 
