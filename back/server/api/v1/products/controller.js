@@ -48,3 +48,15 @@ exports.updateGroupForAllProducts = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.listProductCategoriesByGroup = async (req, res, next) => {
+  try {
+    const { group } = req.params;
+    const categories = await Product.distinct('categories', {
+      groups: group,
+    });
+    return res.status(200).json(categories);
+  } catch (err) {
+    return next(err);
+  }
+};
