@@ -13,6 +13,11 @@ exports.ForbiddenErrorResponse = (message = 'Forbidden') => ({
   message,
 });
 
+exports.NotFoundErrorResponse = (message = 'Not Found') => ({
+  statusCode: 404,
+  message,
+});
+
 exports.InternalServerErrorResponse = (message = 'Internal Server Error') => ({
   statusCode: 500,
   message,
