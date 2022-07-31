@@ -18,6 +18,11 @@ exports.NotFoundErrorResponse = (message = 'Not Found') => ({
   message,
 });
 
+exports.ConflictErrorResponse = (message = 'Conflict') => ({
+  statusCode: 409,
+  message,
+});
+
 exports.InternalServerErrorResponse = (message = 'Internal Server Error') => ({
   statusCode: 500,
   message,
