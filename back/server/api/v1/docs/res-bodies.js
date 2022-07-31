@@ -1,12 +1,21 @@
-exports.okResBodyDoc = (description, schema) => ({
-  200: {
+exports.okResBodyDoc = (description = 'Ok', schema) => {
+  const doc = {
     description,
-    content: { 'application/json': { schema } },
-  },
-});
+  };
 
-exports.simpleOkResBodyDoc = (description, schemaRef) =>
-  this.okResBodyDoc(description, { $ref: schemaRef });
+  if (schema != null) {
+    doc.content = { 'application/json': { schema } };
+  }
+
+  return { 200: doc };
+};
+
+exports.simpleOkResBodyDoc = (description, schemaRef) => {
+  return this.okResBodyDoc(
+    description,
+    schemaRef == null ? null : { $ref: schemaRef },
+  );
+};
 
 exports.createdResBodyDoc = (description = 'Created', schema) => {
   const doc = {
