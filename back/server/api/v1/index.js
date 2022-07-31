@@ -7,6 +7,7 @@ router.use('/auth', require('./auth/router'));
 router.use('/carts', require('./carts/router'));
 router.use('/health', require('./health').router);
 router.use('/users', require('./users/router'));
+router.use('/orders', require('./orders/router'));
 router.use('/products', require('./products/router'));
 
 // OpenAPI documentation
