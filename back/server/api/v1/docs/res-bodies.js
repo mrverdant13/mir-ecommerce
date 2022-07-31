@@ -1,13 +1,17 @@
-exports.okResBodyDoc = (description = 'Ok', schema) => {
-  const doc = {
-    description,
-  };
-
-  if (schema != null) {
-    doc.content = { 'application/json': { schema } };
+const resBodyDoc = (code, description, schema) => {
+  if (code == null) {
+    throw new Error('code is required');
   }
+  if (description == null) {
+    throw new Error('description is required');
+  }
+  const doc = { description };
+  if (schema != null) doc.content = { 'application/json': { schema } };
+  return { [code]: doc };
+};
 
-  return { 200: doc };
+exports.okResBodyDoc = (description = 'Ok', schema) => {
+  return resBodyDoc(200, description, schema);
 };
 
 exports.simpleOkResBodyDoc = (description, schemaRef) => {
@@ -18,15 +22,7 @@ exports.simpleOkResBodyDoc = (description, schemaRef) => {
 };
 
 exports.createdResBodyDoc = (description = 'Created', schema) => {
-  const doc = {
-    description,
-  };
-
-  if (schema != null) {
-    doc.content = { 'application/json': { schema } };
-  }
-
-  return { 201: doc };
+  return resBodyDoc(201, description, schema);
 };
 
 exports.simpleCreatedResBodyDoc = (description, schemaRef) => {
@@ -56,6 +52,28 @@ exports.simpleForbiddenResBodyDoc = (description) => ({
 
 exports.defaultForbiddenResBodyDoc =
   this.simpleForbiddenResBodyDoc('Forbidden');
+
+exports.notFoundResBodyDoc = (description = 'Not Found', schema) => {
+  return resBodyDoc(404, description, schema);
+};
+
+exports.refNotFoundResBodyDoc = (schemaRef, description) => {
+  if (schemaRef == null) {
+    throw new Error('schema ref is required');
+  }
+  return this.notFoundResBodyDoc(description, { $ref: schemaRef });
+};
+
+exports.conflictResBodyDoc = (description = 'Conflict', schema) => {
+  return resBodyDoc(409, description, schema);
+};
+
+exports.refConflictResBodyDoc = (schemaRef, description) => {
+  if (schemaRef == null) {
+    throw new Error('schema ref is required');
+  }
+  return this.conflictResBodyDoc(description, { $ref: schemaRef });
+};
 
 exports.fallbackInternalServerErrorResBodyDoc = {
   500: {
