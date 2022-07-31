@@ -39,7 +39,7 @@ exports.cartsPaths = {
       security: [{ Bearer: [] }],
       requestBody: requestBodyDoc(
         'Cart item data',
-        '#/components/schemas/CartItem',
+        '#/components/schemas/SetCartItemData',
       ),
       responses: {
         ...simpleOkResBodyDoc('Cart item set.'),
@@ -53,6 +53,19 @@ exports.cartsPaths = {
 
 exports.cartsSchemas = {
   CartItem: {
+    type: 'object',
+    properties: {
+      quantity: {
+        type: 'number',
+        minimum: 1,
+      },
+      product: {
+        $ref: '#/components/schemas/Product',
+      },
+    },
+    required: ['quantity'],
+  },
+  SetCartItemData: {
     type: 'object',
     properties: {
       productId: {
