@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { isEmail } = require('validator');
 const { defaultAdmin } = require('../../../../config');
 const logger = require('../../../../logger');
+const { cartItemSchema } = require('../carts/entities');
 
 const passwordFieldName = 'password';
 
@@ -10,6 +11,11 @@ const hiddenFields = {
   [passwordFieldName]: {
     type: String,
     required: true,
+  },
+  cartItems: {
+    type: [cartItemSchema],
+    required: true,
+    default: [],
   },
 };
 
