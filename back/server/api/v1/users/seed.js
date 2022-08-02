@@ -50,7 +50,7 @@ const seedUsers = async () => {
     console.info(`Check the ${file} file to review the new users data.`);
     process.exit(0);
   } catch (e) {
-    console.error(`Error seeding users.`);
+    console.error('Error seeding users.');
     console.error(e);
     process.exit(1);
   }

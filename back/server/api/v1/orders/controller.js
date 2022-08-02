@@ -25,7 +25,7 @@ exports.placeOrder = async (req, res, next) => {
   try {
     const { _id } = req.me;
     const me = await User.findOne({ _id }).populate('cartItems.product');
-    const cartItems = me.cartItems;
+    const { cartItems } = me;
     if (cartItems.length === 0) {
       const errorMsg = 'Empty user cart';
       return next(ConflictErrorResponse(errorMsg));
