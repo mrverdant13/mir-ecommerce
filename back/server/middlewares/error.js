@@ -10,7 +10,7 @@ const fallbackErrorMiddleware = (err, _, __, next) => {
   next({ statusCode, message });
 };
 
-const errorHandlerMiddleware = (err, _, res, __) => {
+const errorHandlerMiddleware = (err, _, res) => {
   const { statusCode, message } = err;
   res.status(statusCode).json({ message });
 };

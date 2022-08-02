@@ -62,7 +62,7 @@ const seedProducts = async () => {
     console.info('Check "https://fakerjs.dev/api/image.html#image" to verify.');
     process.exit(0);
   } catch (e) {
-    console.error(`Error seeding products.`);
+    console.error('Error seeding products.');
     console.error(e);
     process.exit(1);
   }

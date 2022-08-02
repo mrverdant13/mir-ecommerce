@@ -14,7 +14,6 @@ exports.listProducts = async (req, res, next) => {
     if (category != null) {
       filter.categories = category;
     }
-    console.log(filter);
     const [products, productsCount] = await Promise.all([
       Product.find(filter).skip(offset).limit(limit),
       Product.countDocuments(filter),
@@ -65,7 +64,6 @@ exports.updateGroupForAllProducts = async (req, res, next) => {
   try {
     const { group: currentGroup } = req.params;
     const { newGroup } = req.body;
-    console.log(currentGroup, newGroup);
     await Product.updateMany(
       { groups: currentGroup },
       { $set: { 'groups.$': newGroup } },
