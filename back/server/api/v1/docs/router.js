@@ -11,7 +11,7 @@ const {
   productsPaths,
   productsTag,
 } = require('../products/docs');
-const { usersSchemas } = require('../users/docs');
+const { usersSchemas, usersPaths, usersTag } = require('../users/docs');
 
 const openApiDoc = {
   openapi: '3.0.0',
@@ -25,13 +25,14 @@ const openApiDoc = {
       url: `http://localhost:${port}/api/v1`,
     },
   ],
-  tags: [authTag, cartsTag, healthTag, ordersTag, productsTag],
+  tags: [authTag, cartsTag, healthTag, ordersTag, productsTag, usersTag],
   paths: {
     ...authPaths,
     ...cartsPaths,
     ...healthPaths,
     ...ordersPaths,
     ...productsPaths,
+    ...usersPaths,
   },
   components: {
     schemas: {
