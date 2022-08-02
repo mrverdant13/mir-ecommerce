@@ -62,8 +62,6 @@ export default function LoginForm() {
           // Password
           if (!values.password) {
             errors.password = 'Required';
-          } else if (values.password.length < 6) {
-            errors.password = 'Password must be at least 6 characters';
           }
 
           return errors;
