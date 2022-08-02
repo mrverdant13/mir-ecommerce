@@ -15,8 +15,8 @@ exports.okResBodyDoc = (schema, description = 'Ok') =>
 
 exports.simpleOkResBodyDoc = (description, schemaRef) =>
   this.okResBodyDoc(
-    description,
     schemaRef == null ? null : { $ref: schemaRef },
+    description,
   );
 
 exports.createdResBodyDoc = (schema, description = 'Created') =>
@@ -24,8 +24,8 @@ exports.createdResBodyDoc = (schema, description = 'Created') =>
 
 exports.simpleCreatedResBodyDoc = (description, schemaRef) =>
   this.createdResBodyDoc(
-    description,
     schemaRef == null ? null : { $ref: schemaRef },
+    description,
   );
 
 exports.simpleBadRequestResBodyDoc = (description) => ({
@@ -56,7 +56,7 @@ exports.refNotFoundResBodyDoc = (schemaRef, description) => {
   if (schemaRef == null) {
     throw new Error('schema ref is required');
   }
-  return this.notFoundResBodyDoc(description, { $ref: schemaRef });
+  return this.notFoundResBodyDoc({ $ref: schemaRef }, description);
 };
 
 exports.conflictResBodyDoc = (schema, description = 'Conflict') =>
@@ -66,7 +66,7 @@ exports.refConflictResBodyDoc = (schemaRef, description) => {
   if (schemaRef == null) {
     throw new Error('schema ref is required');
   }
-  return this.conflictResBodyDoc(description, { $ref: schemaRef });
+  return this.conflictResBodyDoc({ $ref: schemaRef }, description);
 };
 
 exports.fallbackInternalServerErrorResBodyDoc = {
