@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "dev": "nodemon index"
+    "dev": "cross-env NODE_ENV=development nodemon index",
+    "seed": "cross-env NODE_ENV=seeding node seed"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +25,9 @@
     "winston": "^3.8.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.3.0",
+    "cross-env": "^7.0.3",
+    "inquirer": "^8.2.4",
     "nodemon": "^2.0.19"
   }
 }
