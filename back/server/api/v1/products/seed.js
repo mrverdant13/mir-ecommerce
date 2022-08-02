@@ -56,6 +56,10 @@ const seedProducts = async () => {
       await product.save();
     }
     console.info('Done');
+    console.info(
+      'The base URL for product image is: "https://loremflickr.com".',
+    );
+    console.info('Check "https://fakerjs.dev/api/image.html#image" to verify.');
     process.exit(0);
   } catch (e) {
     console.error(`Error seeding products.`);
