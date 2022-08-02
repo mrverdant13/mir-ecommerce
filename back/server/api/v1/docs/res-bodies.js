@@ -10,7 +10,7 @@ const resBodyDoc = (code, description, schema) => {
   return { [code]: doc };
 };
 
-exports.okResBodyDoc = (description = 'Ok', schema) =>
+exports.okResBodyDoc = (schema, description = 'Ok') =>
   resBodyDoc(200, description, schema);
 
 exports.simpleOkResBodyDoc = (description, schemaRef) =>
@@ -19,7 +19,7 @@ exports.simpleOkResBodyDoc = (description, schemaRef) =>
     schemaRef == null ? null : { $ref: schemaRef },
   );
 
-exports.createdResBodyDoc = (description = 'Created', schema) =>
+exports.createdResBodyDoc = (schema, description = 'Created') =>
   resBodyDoc(201, description, schema);
 
 exports.simpleCreatedResBodyDoc = (description, schemaRef) =>
@@ -49,7 +49,7 @@ exports.simpleForbiddenResBodyDoc = (description) => ({
 exports.defaultForbiddenResBodyDoc =
   this.simpleForbiddenResBodyDoc('Forbidden');
 
-exports.notFoundResBodyDoc = (description = 'Not Found', schema) =>
+exports.notFoundResBodyDoc = (schema, description = 'Not Found') =>
   resBodyDoc(404, description, schema);
 
 exports.refNotFoundResBodyDoc = (schemaRef, description) => {
@@ -59,7 +59,7 @@ exports.refNotFoundResBodyDoc = (schemaRef, description) => {
   return this.notFoundResBodyDoc(description, { $ref: schemaRef });
 };
 
-exports.conflictResBodyDoc = (description = 'Conflict', schema) =>
+exports.conflictResBodyDoc = (schema, description = 'Conflict') =>
   resBodyDoc(409, description, schema);
 
 exports.refConflictResBodyDoc = (schemaRef, description) => {

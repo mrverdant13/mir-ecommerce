@@ -10,6 +10,7 @@ exports.listOrders = async (req, res, next) => {
   try {
     const { me } = req;
     const { limit, offset } = getPaginationParams(req);
+    // eslint-disable-next-line no-underscore-dangle
     const filter = { userId: me._id };
     const [orders, ordersCount] = await Promise.all([
       Order.find(filter).skip(offset).limit(limit),
@@ -31,6 +32,7 @@ exports.placeOrder = async (req, res, next) => {
       return next(ConflictErrorResponse(errorMsg));
     }
     const order = new Order({
+      // eslint-disable-next-line no-underscore-dangle
       userId: me._id,
       products: cartItems.map((item) => ({
         name: item.product.name,

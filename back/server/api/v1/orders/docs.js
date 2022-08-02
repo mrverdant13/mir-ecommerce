@@ -4,7 +4,6 @@ const {
   defaultBadRequestResBodyDoc,
   fallbackInternalServerErrorResBodyDoc,
   okResBodyDoc,
-  simpleOkResBodyDoc,
   conflictResBodyDoc,
   notFoundResBodyDoc,
 } = require('../docs/res-bodies');
