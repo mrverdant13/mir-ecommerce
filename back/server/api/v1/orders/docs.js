@@ -1,11 +1,11 @@
 const { paginatorQueryParamsDocs } = require('../../../middlewares/paginator');
 const {
-  defaultUnauthorizedResBodyDoc,
-  defaultBadRequestResBodyDoc,
-  fallbackInternalServerErrorResBodyDoc,
   okResBodyDoc,
-  conflictResBodyDoc,
-  notFoundResBodyDoc,
+  simpleBadRequestResBodyDoc,
+  simpleUnauthorizedResBodyDoc,
+  fallbackInternalServerErrorResBodyDoc,
+  simpleConflictResBodyDoc,
+  simpleNotFoundResBodyDoc,
 } = require('../docs/res-bodies');
 
 exports.ordersTag = {
@@ -23,25 +23,28 @@ exports.ordersPaths = {
       security: [{ Bearer: [] }],
       parameters: [...paginatorQueryParamsDocs],
       responses: {
-        ...okResBodyDoc('Orders retrieved.', {
-          type: 'object',
-          properties: {
-            total: {
-              type: 'number',
-              description: 'Total number of orders.',
-            },
-            orders: {
-              type: 'array',
-              description: 'Orders.',
-              items: {
-                $ref: '#/components/schemas/Order',
+        ...okResBodyDoc(
+          {
+            type: 'object',
+            properties: {
+              total: {
+                type: 'number',
+                description: 'Total number of orders.',
+              },
+              orders: {
+                type: 'array',
+                description: 'Orders.',
+                items: {
+                  $ref: '#/components/schemas/Order',
+                },
               },
             },
+            required: ['total', 'orders'],
           },
-          required: ['total', 'orders'],
-        }),
-        ...defaultBadRequestResBodyDoc,
-        ...defaultUnauthorizedResBodyDoc,
+          'Orders retrieved.',
+        ),
+        ...simpleBadRequestResBodyDoc(),
+        ...simpleUnauthorizedResBodyDoc(),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
@@ -52,8 +55,8 @@ exports.ordersPaths = {
       operationId: '/orders.post',
       security: [{ Bearer: [] }],
       responses: {
-        ...conflictResBodyDoc('The user cart is empty.'),
-        ...defaultUnauthorizedResBodyDoc,
+        ...simpleConflictResBodyDoc('The user cart is empty.'),
+        ...simpleUnauthorizedResBodyDoc(),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
@@ -78,9 +81,9 @@ exports.ordersPaths = {
         },
       ],
       responses: {
-        ...defaultUnauthorizedResBodyDoc,
-        ...notFoundResBodyDoc('Order not found.'),
-        ...conflictResBodyDoc(),
+        ...simpleUnauthorizedResBodyDoc(),
+        ...simpleNotFoundResBodyDoc('Order not found.'),
+        ...simpleConflictResBodyDoc(),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
@@ -105,9 +108,9 @@ exports.ordersPaths = {
         },
       ],
       responses: {
-        ...defaultUnauthorizedResBodyDoc,
-        ...notFoundResBodyDoc('Order not found.'),
-        ...conflictResBodyDoc(),
+        ...simpleUnauthorizedResBodyDoc(),
+        ...simpleNotFoundResBodyDoc('Order not found.'),
+        ...simpleConflictResBodyDoc(),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
@@ -132,9 +135,9 @@ exports.ordersPaths = {
         },
       ],
       responses: {
-        ...defaultUnauthorizedResBodyDoc,
-        ...notFoundResBodyDoc('Order not found.'),
-        ...conflictResBodyDoc(),
+        ...simpleUnauthorizedResBodyDoc(),
+        ...simpleNotFoundResBodyDoc('Order not found.'),
+        ...simpleConflictResBodyDoc(),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },

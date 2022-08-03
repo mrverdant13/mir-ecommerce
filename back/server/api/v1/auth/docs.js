@@ -1,11 +1,10 @@
 const { requestBodyDoc } = require('../docs/req-body');
 const {
-  simpleCreatedResBodyDoc,
+  refCreatedResBodyDoc,
   fallbackInternalServerErrorResBodyDoc,
   createdResBodyDoc,
   simpleUnauthorizedResBodyDoc,
-  simpleOkResBodyDoc,
-  defaultUnauthorizedResBodyDoc,
+  refOkResBodyDoc,
 } = require('../docs/res-bodies');
 
 exports.authTag = {
@@ -25,9 +24,9 @@ exports.authPaths = {
         '#/components/schemas/NewUser',
       ),
       responses: {
-        ...simpleCreatedResBodyDoc(
-          'Non-admin user profile created.',
+        ...refCreatedResBodyDoc(
           '#/components/schemas/User',
+          'Non-admin user profile created.',
         ),
         ...fallbackInternalServerErrorResBodyDoc,
       },
@@ -44,21 +43,24 @@ exports.authPaths = {
         '#/components/schemas/UserCredentials',
       ),
       responses: {
-        ...createdResBodyDoc('User logged in.', {
-          allOf: [
-            { $ref: '#/components/schemas/User' },
-            {
-              type: 'object',
-              properties: {
-                jwt: {
-                  type: 'string',
-                  format: 'JWT',
+        ...createdResBodyDoc(
+          {
+            allOf: [
+              { $ref: '#/components/schemas/User' },
+              {
+                type: 'object',
+                properties: {
+                  jwt: {
+                    type: 'string',
+                    format: 'JWT',
+                  },
                 },
+                required: ['jwt'],
               },
-              required: ['jwt'],
-            },
-          ],
-        }),
+            ],
+          },
+          'User logged in.',
+        ),
         ...simpleUnauthorizedResBodyDoc('Invalid credentials.'),
         ...fallbackInternalServerErrorResBodyDoc,
       },
@@ -72,11 +74,11 @@ exports.authPaths = {
       operationId: '/auth/me',
       security: [{ Bearer: [] }],
       responses: {
-        ...simpleOkResBodyDoc(
-          'User profile retrieved.',
+        ...refOkResBodyDoc(
           '#/components/schemas/User',
+          'User profile retrieved.',
         ),
-        ...defaultUnauthorizedResBodyDoc,
+        ...simpleUnauthorizedResBodyDoc(),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
