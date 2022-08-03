@@ -10,6 +10,7 @@ exports.listOrders = async (req, res, next) => {
   try {
     const { me } = req;
     const { limit, offset } = getPaginationParams(req);
+    // eslint-disable-next-line no-underscore-dangle
     const filter = { userId: me._id };
     const [orders, ordersCount] = await Promise.all([
       Order.find(filter).skip(offset).limit(limit),
@@ -25,12 +26,13 @@ exports.placeOrder = async (req, res, next) => {
   try {
     const { _id } = req.me;
     const me = await User.findOne({ _id }).populate('cartItems.product');
-    const cartItems = me.cartItems;
+    const { cartItems } = me;
     if (cartItems.length === 0) {
       const errorMsg = 'Empty user cart';
       return next(ConflictErrorResponse(errorMsg));
     }
     const order = new Order({
+      // eslint-disable-next-line no-underscore-dangle
       userId: me._id,
       products: cartItems.map((item) => ({
         name: item.product.name,

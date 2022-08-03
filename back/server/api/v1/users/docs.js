@@ -1,3 +1,53 @@
+const { paginatorQueryParamsDocs } = require('../../../middlewares/paginator');
+const {
+  defaultBadRequestResBodyDoc,
+  fallbackInternalServerErrorResBodyDoc,
+  okResBodyDoc,
+  defaultUnauthorizedResBodyDoc,
+  defaultForbiddenResBodyDoc,
+} = require('../docs/res-bodies');
+
+exports.usersTag = {
+  name: 'users',
+  description: 'Users utilities.',
+};
+
+exports.usersPaths = {
+  '/users': {
+    get: {
+      tags: [this.usersTag.name],
+      summary: 'List users',
+      description: 'Retrieve users.',
+      operationId: '/users.get',
+      security: [{ Bearer: [] }],
+      parameters: [...paginatorQueryParamsDocs],
+      responses: {
+        ...okResBodyDoc('Users retrieved.', {
+          type: 'object',
+          properties: {
+            total: {
+              type: 'number',
+              description: 'Total number of users.',
+            },
+            users: {
+              type: 'array',
+              description: 'Users.',
+              items: {
+                $ref: '#/components/schemas/User',
+              },
+            },
+          },
+          required: ['total', 'users'],
+        }),
+        ...defaultBadRequestResBodyDoc,
+        ...defaultUnauthorizedResBodyDoc,
+        ...defaultForbiddenResBodyDoc,
+        ...fallbackInternalServerErrorResBodyDoc,
+      },
+    },
+  },
+};
+
 exports.usersSchemas = {
   User: {
     type: 'object',

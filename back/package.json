@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "dev": "nodemon index"
+    "dev": "cross-env NODE_ENV=development nodemon index",
+    "format": "prettier --write .",
+    "lint": "eslint --fix . --ext .js,.jsx,.ts,.tsx",
+    "seed": "cross-env NODE_ENV=seeding node seed"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +27,15 @@
     "winston": "^3.8.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "@faker-js/faker": "^7.3.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.21.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "inquirer": "^8.2.4",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1"
   }
 }

@@ -3,6 +3,7 @@ const { verify } = require('jsonwebtoken');
 const {
   jwt: { secret },
 } = require('../../../../config');
+const logger = require('../../../../logger');
 const {
   UnauthorizedErrorResponse,
   InternalServerErrorResponse,
@@ -41,10 +42,7 @@ exports.isAdmin = async (req, _, next) => {
   try {
     if (!req.me) {
       logger.error(
-        `
-Implementation error:
-The 'me' middleware must be used before the 'isAdmin' middleware.
-`,
+        `Implementation error: The 'me' middleware must be used before the 'isAdmin' middleware.`,
       );
       return next(InternalServerErrorResponse());
     }

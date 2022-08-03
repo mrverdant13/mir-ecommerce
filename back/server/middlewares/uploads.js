@@ -3,8 +3,8 @@ const { v4: uuid } = require('uuid');
 const path = require('path');
 const { BadRequestErrorResponse } = require('../responses');
 
-const storage = (relativePath = '') => {
-  return multer.diskStorage({
+const storage = (relativePath = '') =>
+  multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, `uploads/${relativePath}`);
     },
@@ -13,17 +13,16 @@ const storage = (relativePath = '') => {
       cb(null, `${uuid()}${ext}`);
     },
   });
-};
 
-const fileFilter = (allowedMimes = []) => {
-  return (req, file, cb) => {
+const fileFilter =
+  (allowedMimes = []) =>
+  (req, file, cb) => {
     if (allowedMimes.includes(file.mimetype)) {
       cb(null, true);
     } else {
       cb(BadRequestErrorResponse('Invalid file type.'));
     }
   };
-};
 
 const uploads = (relativePath = '', allowedMimes = []) =>
   multer({
