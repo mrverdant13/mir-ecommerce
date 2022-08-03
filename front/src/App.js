@@ -5,6 +5,9 @@ import Typography from '@mui/material/Typography';
 
 import NavBar from './components/NavBar';
 import { AuthProvider } from './context/auth';
+import Ofertas from './components/Ofertas';
+import Slider from './components/Slider';
+import Categories from './components/Categories';
 const Home = lazy(() => import('./pages/Home'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const SignUpPage = lazy(() => import('./pages/SignUpPage'));
@@ -14,7 +17,11 @@ function App() {
   return (
     <div className="App">
       <AuthProvider>
+        <Ofertas/>
         <NavBar />
+        <Slider/>
+        <br/>
+        <Categories/>
         <Suspense fallback={<LoadingPagePlaceholder />}>
           <Routes>
             <Route path="/" element={<Home />} />

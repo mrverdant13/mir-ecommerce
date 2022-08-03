@@ -5,6 +5,13 @@ import { Box, Button } from '@mui/material';
 
 import homeCoupleImg from '../assets/images/home-couple.jpg';
 
+import styled from 'styled-components'
+
+const Container = styled.div`
+  height:60px;
+  background-color : black
+`
+
 function GenderButton(props) {
   const { label, destination } = props;
   const navigate = useNavigate();
