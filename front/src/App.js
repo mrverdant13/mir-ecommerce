@@ -8,6 +8,7 @@ import { AuthProvider } from './context/auth';
 import Ofertas from './components/Ofertas';
 import Slider from './components/Slider';
 import Categories from './components/Categories';
+import Products from './components/Products';
 const Home = lazy(() => import('./pages/Home'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const SignUpPage = lazy(() => import('./pages/SignUpPage'));
@@ -22,6 +23,7 @@ function App() {
         <Slider/>
         <br/>
         <Categories/>
+        <Products/>
         <Suspense fallback={<LoadingPagePlaceholder />}>
           <Routes>
             <Route path="/" element={<Home />} />
