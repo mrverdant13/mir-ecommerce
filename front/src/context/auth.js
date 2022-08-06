@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
 import {
+  editProfile as editProfileReq,
   logIn as logInReq,
   me as meReq,
   removeAuthHeader,
@@ -74,6 +75,19 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   };
 
+  const editProfile = async ({ name, lastName }) => {
+    console.debug('editProfile');
+    setLoading(true);
+    setError(null);
+    try {
+      const { data } = await editProfileReq({ name, lastName });
+      setUser(data);
+    } catch (err) {
+      setError(err.message ?? 'Unexpected error');
+    }
+    setLoading(false);
+  };
+
   return (
     <authContext.Provider
       value={{
@@ -83,6 +97,7 @@ export const AuthProvider = ({ children }) => {
         logIn,
         logOut,
         refreshProfile,
+        editProfile,
       }}
     >
       {children}

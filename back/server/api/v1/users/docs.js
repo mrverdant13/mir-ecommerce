@@ -112,4 +112,17 @@ exports.usersSchemas = {
     },
     required: ['name', 'lastName', 'email', 'password'],
   },
+  UpdatedUser: {
+    type: 'object',
+    properties: {
+      name: {
+        type: 'string',
+        minlength: 1,
+      },
+      lastName: {
+        type: 'string',
+        minlength: 1,
+      },
+    },
+  },
 };
