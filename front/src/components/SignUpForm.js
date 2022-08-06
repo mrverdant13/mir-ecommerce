@@ -21,8 +21,7 @@ import { TextField } from 'formik-mui';
 
 import { useAuthContext } from '../context/auth';
 import { useSignUpContext } from '../context/signUp';
-
-const emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+import { emailRegExp } from '../regexps';
 
 export default function SignUpForm() {
   const navigate = useNavigate();
