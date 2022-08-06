@@ -71,13 +71,28 @@ exports.authPaths = {
       tags: [this.authTag.name],
       summary: 'Get user profile',
       description: 'Get user profile.',
-      operationId: '/auth/me',
+      operationId: '/auth/me.get',
       security: [{ Bearer: [] }],
       responses: {
         ...refOkResBodyDoc(
           '#/components/schemas/User',
           'User profile retrieved.',
         ),
+        ...simpleUnauthorizedResBodyDoc(),
+        ...fallbackInternalServerErrorResBodyDoc,
+      },
+    },
+    patch: {
+      tags: [this.authTag.name],
+      summary: 'Edit user profile',
+      operationId: '/auth/me.patch',
+      security: [{ Bearer: [] }],
+      requestBody: requestBodyDoc(
+        'Updated user data.',
+        '#/components/schemas/UpdatedUser',
+      ),
+      responses: {
+        ...refOkResBodyDoc('#/components/schemas/User', 'User profile updated'),
         ...simpleUnauthorizedResBodyDoc(),
         ...fallbackInternalServerErrorResBodyDoc,
       },
