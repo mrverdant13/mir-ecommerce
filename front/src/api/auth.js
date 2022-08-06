@@ -40,6 +40,20 @@ export const me = async () => {
   }
 };
 
+export const editProfile = async ({ name, lastName }) => {
+  try {
+    return await apiClient.patch('/auth/me', {
+      name,
+      lastName,
+    });
+  } catch (e) {
+    const status = e.response?.status;
+    if (status === 401) throw new Error('User not logged in');
+    if (status === 500) throw new Error('Unexpected error');
+    throw e;
+  }
+};
+
 let reqInterceptor = null;
 let resInterceptor = null;
 
