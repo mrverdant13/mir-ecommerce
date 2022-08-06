@@ -13,3 +13,16 @@ exports.listUsers = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.editProfile = async (req, res, next) => {
+  try {
+    const { me } = req;
+    const { name, lastName } = req.body;
+    me.name = name;
+    me.lastName = lastName;
+    const updatedUser = await me.save();
+    return res.status(200).json(updatedUser);
+  } catch (err) {
+    return next(err);
+  }
+};
