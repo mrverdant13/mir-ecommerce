@@ -1,10 +1,10 @@
 const { requestBodyDoc } = require('../docs/req-body');
 const {
-  defaultUnauthorizedResBodyDoc,
   okResBodyDoc,
+  simpleUnauthorizedResBodyDoc,
   fallbackInternalServerErrorResBodyDoc,
-  defaultBadRequestResBodyDoc,
   simpleOkResBodyDoc,
+  simpleBadRequestResBodyDoc,
 } = require('../docs/res-bodies');
 
 exports.cartsTag = {
@@ -21,13 +21,16 @@ exports.cartsPaths = {
       operationId: '/my-cart.get',
       security: [{ Bearer: [] }],
       responses: {
-        ...okResBodyDoc('Cart retrieved.', {
-          type: 'array',
-          items: {
-            $ref: '#/components/schemas/CartItem',
+        ...okResBodyDoc(
+          {
+            type: 'array',
+            items: {
+              $ref: '#/components/schemas/CartItem',
+            },
           },
-        }),
-        ...defaultUnauthorizedResBodyDoc,
+          'Cart retrieved.',
+        ),
+        ...simpleUnauthorizedResBodyDoc(),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
@@ -43,8 +46,8 @@ exports.cartsPaths = {
       ),
       responses: {
         ...simpleOkResBodyDoc('Cart item set.'),
-        ...defaultUnauthorizedResBodyDoc,
-        ...defaultBadRequestResBodyDoc,
+        ...simpleUnauthorizedResBodyDoc(),
+        ...simpleBadRequestResBodyDoc(),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },

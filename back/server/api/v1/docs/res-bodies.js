@@ -1,4 +1,4 @@
-const resBodyDoc = (code, description, schema) => {
+const resBodyDoc = (code, schema, description) => {
   if (code == null) {
     throw new Error('code is required');
   }
@@ -10,67 +10,121 @@ const resBodyDoc = (code, description, schema) => {
   return { [code]: doc };
 };
 
-exports.okResBodyDoc = (schema, description = 'Ok') =>
-  resBodyDoc(200, description, schema);
+const okResBodyDoc = (schema, description = 'Ok') =>
+  resBodyDoc(200, schema, description);
 
-exports.simpleOkResBodyDoc = (description, schemaRef) =>
-  this.okResBodyDoc(
+const simpleOkResBodyDoc = (description) => okResBodyDoc(null, description);
+
+const refOkResBodyDoc = (schemaRef, description) =>
+  okResBodyDoc(schemaRef == null ? null : { $ref: schemaRef }, description);
+
+const createdResBodyDoc = (schema, description = 'Created') =>
+  resBodyDoc(201, schema, description);
+
+const simpleCreatedResBodyDoc = (description) =>
+  createdResBodyDoc(null, description);
+
+const refCreatedResBodyDoc = (schemaRef, description) =>
+  createdResBodyDoc(
     schemaRef == null ? null : { $ref: schemaRef },
     description,
   );
 
-exports.createdResBodyDoc = (schema, description = 'Created') =>
-  resBodyDoc(201, description, schema);
+const badRequestResBodyDoc = (schema, description = 'Bad Request') =>
+  resBodyDoc(400, schema, description);
 
-exports.simpleCreatedResBodyDoc = (description, schemaRef) =>
-  this.createdResBodyDoc(
+const simpleBadRequestResBodyDoc = (description) =>
+  badRequestResBodyDoc(null, description);
+
+const refBadRequestResBodyDoc = (schemaRef, description) =>
+  badRequestResBodyDoc(
     schemaRef == null ? null : { $ref: schemaRef },
     description,
   );
 
-exports.simpleBadRequestResBodyDoc = (description) => ({
-  400: { description },
-});
+const unauthorizedResBodyDoc = (schema, description = 'Unauthorized') =>
+  resBodyDoc(401, schema, description);
 
-exports.defaultBadRequestResBodyDoc =
-  this.simpleBadRequestResBodyDoc('Bad request');
+const simpleUnauthorizedResBodyDoc = (description) =>
+  unauthorizedResBodyDoc(null, description);
 
-exports.simpleUnauthorizedResBodyDoc = (description) => ({
-  401: { description },
-});
+const refUnauthorizedResBodyDoc = (schemaRef, description) =>
+  unauthorizedResBodyDoc(
+    schemaRef == null ? null : { $ref: schemaRef },
+    description,
+  );
 
-exports.defaultUnauthorizedResBodyDoc =
-  this.simpleUnauthorizedResBodyDoc('Unauthorized');
+const forbiddenResBodyDoc = (schema, description = 'Forbidden') =>
+  resBodyDoc(403, schema, description);
 
-exports.simpleForbiddenResBodyDoc = (description) => ({
-  403: { description },
-});
+const simpleForbiddenResBodyDoc = (description) =>
+  forbiddenResBodyDoc(null, description);
 
-exports.defaultForbiddenResBodyDoc =
-  this.simpleForbiddenResBodyDoc('Forbidden');
+const refForbiddenResBodyDoc = (schemaRef, description) =>
+  forbiddenResBodyDoc(
+    schemaRef == null ? null : { $ref: schemaRef },
+    description,
+  );
 
-exports.notFoundResBodyDoc = (schema, description = 'Not Found') =>
-  resBodyDoc(404, description, schema);
+const notFoundResBodyDoc = (schema, description = 'Not Found') =>
+  resBodyDoc(404, schema, description);
 
-exports.refNotFoundResBodyDoc = (schemaRef, description) => {
-  if (schemaRef == null) {
-    throw new Error('schema ref is required');
-  }
-  return this.notFoundResBodyDoc({ $ref: schemaRef }, description);
-};
+const simpleNotFoundResBodyDoc = (description) =>
+  notFoundResBodyDoc(null, description);
 
-exports.conflictResBodyDoc = (schema, description = 'Conflict') =>
-  resBodyDoc(409, description, schema);
+const refNotFoundResBodyDoc = (schemaRef, description) =>
+  notFoundResBodyDoc(
+    schemaRef == null ? null : { $ref: schemaRef },
+    description,
+  );
 
-exports.refConflictResBodyDoc = (schemaRef, description) => {
-  if (schemaRef == null) {
-    throw new Error('schema ref is required');
-  }
-  return this.conflictResBodyDoc({ $ref: schemaRef }, description);
-};
+const conflictResBodyDoc = (schema, description = 'Conflict') =>
+  resBodyDoc(409, schema, description);
 
-exports.fallbackInternalServerErrorResBodyDoc = {
+const simpleConflictResBodyDoc = (description) =>
+  conflictResBodyDoc(null, description);
+
+const refConflictResBodyDoc = (schemaRef, description) =>
+  conflictResBodyDoc(
+    schemaRef == null ? null : { $ref: schemaRef },
+    description,
+  );
+
+const fallbackInternalServerErrorResBodyDoc = {
   500: {
     description: 'Unexpected error',
   },
+};
+
+module.exports = {
+  // 200
+  okResBodyDoc,
+  simpleOkResBodyDoc,
+  refOkResBodyDoc,
+  // 201
+  createdResBodyDoc,
+  simpleCreatedResBodyDoc,
+  refCreatedResBodyDoc,
+  // 400
+  badRequestResBodyDoc,
+  simpleBadRequestResBodyDoc,
+  refBadRequestResBodyDoc,
+  // 401
+  unauthorizedResBodyDoc,
+  simpleUnauthorizedResBodyDoc,
+  refUnauthorizedResBodyDoc,
+  // 403
+  forbiddenResBodyDoc,
+  simpleForbiddenResBodyDoc,
+  refForbiddenResBodyDoc,
+  // 404
+  notFoundResBodyDoc,
+  simpleNotFoundResBodyDoc,
+  refNotFoundResBodyDoc,
+  // 409
+  conflictResBodyDoc,
+  simpleConflictResBodyDoc,
+  refConflictResBodyDoc,
+  // 500
+  fallbackInternalServerErrorResBodyDoc,
 };

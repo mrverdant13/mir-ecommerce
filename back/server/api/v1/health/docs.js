@@ -1,6 +1,6 @@
 const {
+  refOkResBodyDoc,
   fallbackInternalServerErrorResBodyDoc,
-  simpleOkResBodyDoc,
 } = require('../docs/res-bodies');
 
 exports.healthTag = {
@@ -16,9 +16,9 @@ exports.healthPaths = {
       description: 'Check server availability and health.',
       operationId: '/health',
       responses: {
-        ...simpleOkResBodyDoc(
-          'Server is healthy.',
+        ...refOkResBodyDoc(
           '#/components/schemas/Healthy',
+          'Server is healthy.',
         ),
         ...fallbackInternalServerErrorResBodyDoc,
       },
