@@ -1,10 +1,10 @@
 const { paginatorQueryParamsDocs } = require('../../../middlewares/paginator');
 const {
-  defaultBadRequestResBodyDoc,
-  fallbackInternalServerErrorResBodyDoc,
   okResBodyDoc,
-  defaultUnauthorizedResBodyDoc,
-  defaultForbiddenResBodyDoc,
+  simpleBadRequestResBodyDoc,
+  simpleUnauthorizedResBodyDoc,
+  simpleForbiddenResBodyDoc,
+  fallbackInternalServerErrorResBodyDoc,
 } = require('../docs/res-bodies');
 
 exports.usersTag = {
@@ -22,26 +22,29 @@ exports.usersPaths = {
       security: [{ Bearer: [] }],
       parameters: [...paginatorQueryParamsDocs],
       responses: {
-        ...okResBodyDoc('Users retrieved.', {
-          type: 'object',
-          properties: {
-            total: {
-              type: 'number',
-              description: 'Total number of users.',
-            },
-            users: {
-              type: 'array',
-              description: 'Users.',
-              items: {
-                $ref: '#/components/schemas/User',
+        ...okResBodyDoc(
+          {
+            type: 'object',
+            properties: {
+              total: {
+                type: 'number',
+                description: 'Total number of users.',
+              },
+              users: {
+                type: 'array',
+                description: 'Users.',
+                items: {
+                  $ref: '#/components/schemas/User',
+                },
               },
             },
+            required: ['total', 'users'],
           },
-          required: ['total', 'users'],
-        }),
-        ...defaultBadRequestResBodyDoc,
-        ...defaultUnauthorizedResBodyDoc,
-        ...defaultForbiddenResBodyDoc,
+          'Users retrieved.',
+        ),
+        ...simpleBadRequestResBodyDoc(),
+        ...simpleUnauthorizedResBodyDoc(),
+        ...simpleForbiddenResBodyDoc(),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
@@ -108,5 +111,18 @@ exports.usersSchemas = {
       },
     },
     required: ['name', 'lastName', 'email', 'password'],
+  },
+  UpdatedUser: {
+    type: 'object',
+    properties: {
+      name: {
+        type: 'string',
+        minlength: 1,
+      },
+      lastName: {
+        type: 'string',
+        minlength: 1,
+      },
+    },
   },
 };

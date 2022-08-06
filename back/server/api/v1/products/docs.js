@@ -2,11 +2,12 @@ const { paginatorQueryParamsDocs } = require('../../../middlewares/paginator');
 const { requestBodyDoc } = require('../docs/req-body');
 const {
   okResBodyDoc,
-  defaultUnauthorizedResBodyDoc,
+  simpleBadRequestResBodyDoc,
   fallbackInternalServerErrorResBodyDoc,
-  defaultForbiddenResBodyDoc,
+  refCreatedResBodyDoc,
+  simpleUnauthorizedResBodyDoc,
+  simpleForbiddenResBodyDoc,
   simpleCreatedResBodyDoc,
-  defaultBadRequestResBodyDoc,
 } = require('../docs/res-bodies');
 
 exports.productsTag = {
@@ -43,24 +44,27 @@ exports.productsPaths = {
         },
       ],
       responses: {
-        ...okResBodyDoc('Products retrieved.', {
-          type: 'object',
-          properties: {
-            total: {
-              type: 'number',
-              description: 'Total number of products.',
-            },
-            products: {
-              type: 'array',
-              description: 'Products.',
-              items: {
-                $ref: '#/components/schemas/Product',
+        ...okResBodyDoc(
+          {
+            type: 'object',
+            properties: {
+              total: {
+                type: 'number',
+                description: 'Total number of products.',
+              },
+              products: {
+                type: 'array',
+                description: 'Products.',
+                items: {
+                  $ref: '#/components/schemas/Product',
+                },
               },
             },
+            required: ['total', 'products'],
           },
-          required: ['total', 'products'],
-        }),
-        ...defaultBadRequestResBodyDoc,
+          'Products retrieved.',
+        ),
+        ...simpleBadRequestResBodyDoc(),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
@@ -75,12 +79,12 @@ exports.productsPaths = {
         '#/components/schemas/NewProduct',
       ),
       responses: {
-        ...simpleCreatedResBodyDoc(
-          'Product created.',
+        ...refCreatedResBodyDoc(
           '#/components/schemas/Product',
+          'Product created.',
         ),
-        ...defaultUnauthorizedResBodyDoc,
-        ...defaultForbiddenResBodyDoc,
+        ...simpleUnauthorizedResBodyDoc(),
+        ...simpleForbiddenResBodyDoc(),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
@@ -126,9 +130,9 @@ exports.productsPaths = {
       },
       responses: {
         ...simpleCreatedResBodyDoc('Product photo added.'),
-        ...defaultUnauthorizedResBodyDoc,
-        ...defaultForbiddenResBodyDoc,
-        ...defaultBadRequestResBodyDoc,
+        ...simpleUnauthorizedResBodyDoc(),
+        ...simpleForbiddenResBodyDoc(),
+        ...simpleBadRequestResBodyDoc(),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
@@ -140,13 +144,16 @@ exports.productsPaths = {
       description: 'Retrieve product groups.',
       operationId: '/products/groups.get',
       responses: {
-        ...okResBodyDoc('Product groups retrieved.', {
-          type: 'array',
-          description: 'Product groups.',
-          items: {
-            type: 'string',
+        ...okResBodyDoc(
+          {
+            type: 'array',
+            description: 'Product groups.',
+            items: {
+              type: 'string',
+            },
           },
-        }),
+          'Product groups retrieved.',
+        ),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
@@ -188,8 +195,8 @@ exports.productsPaths = {
       },
       responses: {
         ...okResBodyDoc('Group updated for all products.'),
-        ...defaultUnauthorizedResBodyDoc,
-        ...defaultForbiddenResBodyDoc,
+        ...simpleUnauthorizedResBodyDoc(),
+        ...simpleForbiddenResBodyDoc(),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
@@ -212,13 +219,16 @@ exports.productsPaths = {
         },
       ],
       responses: {
-        ...okResBodyDoc('Product categories retrieved.', {
-          type: 'array',
-          description: 'Product categories.',
-          items: {
-            type: 'string',
+        ...okResBodyDoc(
+          {
+            type: 'array',
+            description: 'Product categories.',
+            items: {
+              type: 'string',
+            },
           },
-        }),
+          'Product categories retrieved.',
+        ),
         ...fallbackInternalServerErrorResBodyDoc,
       },
     },
