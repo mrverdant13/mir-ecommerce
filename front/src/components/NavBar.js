@@ -9,8 +9,9 @@ import Logout from "@mui/icons-material/Logout";
 import MaleIcon from "@mui/icons-material/Male";
 import MenuIcon from "@mui/icons-material/Menu";
 import Person from "@mui/icons-material/Person";
-import { Search, ShoppingCartOutlined } from "@material-ui/icons";
-import { Badge } from "@material-ui/core";
+import Search from "@mui/icons-material/Search"
+import ShoppingCartOutlined from "@mui/icons-material/ShoppingCartOutlined"
+import  Badge  from "@mui/icons-material/Badge";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import {
   AppBar,

@@ -26,6 +26,9 @@ function App() {
         <Products/>
         <Suspense fallback={<LoadingPagePlaceholder />}>
           <Routes>
+            <Route path="/slider" element={<Slider/>}/>
+            <Route path="categorias" element={<Categories/>}/>
+            <Route path="/productos" element={<Products/>}/>
             <Route path="/" element={<Home />} />
             <Route path="/sign-up" element={<SignUpPage />} />
             <Route path="/me" element={<ProfilePage />} />

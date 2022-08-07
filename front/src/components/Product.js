@@ -1,10 +1,8 @@
-import {
-  FavoriteBorderOutlined,
-  SearchOutlined,
-  ShoppingCartOutlined,
-} from "@material-ui/icons";
-import React from "react";
+
+import React, { useState,useEffect } from "react";
 import styled from "styled-components";
+
+import { Favorite, Search, ShoppingCart } from "@mui/icons-material";
 
 const Info = styled.div`
     opacity:0;
@@ -69,23 +67,33 @@ const Icon = styled.div`
     }
 `;
 
+
 const Product = ({ item }) => {
+
+  
+
   return (
+    <>
+    
     <Container>
+      <h1>hola</h1>
       <Circle />
-      <Image src={item.img} />
+      <Image src={item?.products?.photos} />
+      <p>{item?.description}</p>
       <Info>
         <Icon>
-          <ShoppingCartOutlined />
+          <ShoppingCart />
         </Icon>
         <Icon>
-          <SearchOutlined />
+          <Search/>
         </Icon>
         <Icon>
-          <FavoriteBorderOutlined />
+          <Favorite/>
         </Icon>
       </Info>
     </Container>
+    <h1>{item?.total}</h1>
+    </>
   );
 };
 

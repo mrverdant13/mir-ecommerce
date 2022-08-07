@@ -72,5 +72,21 @@ export const productos= [
     {
         id:8,
         img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqPL7rZX7LhQFy0xIlmzggtRj8rBq_dO9CA&usqp=CAU"
+    },
+    {
+        id:9,
+        img:"https://i.linio.com/p/eb508955af0c34028dc5bce9b8909cb8-product.jpg"
+    },
+    {
+        id:10,
+        img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8sHWTsmDZTh-MKE8VNicKrgoJtmn1zsp-_A&usqp=CAU"
+    },
+    {
+        id:11,
+        img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqPL7rZX7LhQFy0xIlmzggtRj8rBq_dO9CA&usqp=CAU"
+    },
+    {
+        id:12,
+        img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqPL7rZX7LhQFy0xIlmzggtRj8rBq_dO9CA&usqp=CAU"
     }
 ]
