@@ -1,20 +1,36 @@
-import { CardMedia } from '@mui/material';
 import React from 'react';
+
+import { CardMedia } from '@mui/material';
+import Carousel from 'react-material-ui-carousel';
 
 export default function ProductPhotosCarousel({ product }) {
   const photos = product.photos;
-  const photo = photos[0];
+  const photosCount = photos?.length ?? 0;
+  const showButtons = photosCount > 1;
   return (
-    <CardMedia
-      component="img"
-      alt={product.name}
-      title={product.name}
+    <Carousel
+      indicators={false}
+      height={'100%'}
+      navButtonsAlwaysInvisible={!showButtons}
       sx={{
-        height: '100%',
         width: '100%',
-        objectFit: 'cover',
+        height: '100%',
       }}
-      image={`${process.env.REACT_APP_PRODUCT_IMAGES_BASE_URL}${photo}`}
-    />
+    >
+      {photos.map((photo) => (
+        <CardMedia
+          key={photo}
+          component="img"
+          alt={product.name}
+          title={product.name}
+          sx={{
+            height: '100%',
+            width: '100%',
+            objectFit: 'cover',
+          }}
+          image={`${process.env.REACT_APP_PRODUCT_IMAGES_BASE_URL}${photo}`}
+        />
+      ))}
+    </Carousel>
   );
 }
