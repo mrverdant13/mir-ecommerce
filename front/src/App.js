@@ -9,6 +9,8 @@ import Ofertas from './components/Ofertas';
 import Slider from './components/Slider';
 import Categories from './components/Categories';
 import Products from './components/Products';
+import { CartProvider } from './context/cart';
+const CartPage = lazy(() => import('./pages/CartPage'));
 const Home = lazy(() => import('./pages/Home'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const SignUpPage = lazy(() => import('./pages/SignUpPage'));
@@ -24,14 +26,18 @@ function App() {
         <br/>
         <Categories/>
         <Products/>
-        <Suspense fallback={<LoadingPagePlaceholder />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/sign-up" element={<SignUpPage />} />
-            <Route path="/me" element={<ProfilePage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+        <CartProvider>
+          <NavBar />
+          <Suspense fallback={<LoadingPagePlaceholder />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/sign-up" element={<SignUpPage />} />
+              <Route path="/me" element={<ProfilePage />} />
+              <Route path="/my-cart" element={<CartPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </CartProvider>
       </AuthProvider>
     </div>
   );

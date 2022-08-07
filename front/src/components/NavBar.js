@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import CloseIcon from "@mui/icons-material/Close";
-import FemaleIcon from "@mui/icons-material/Female";
-import Login from "@mui/icons-material/Login";
-import Logout from "@mui/icons-material/Logout";
-import MaleIcon from "@mui/icons-material/Male";
-import MenuIcon from "@mui/icons-material/Menu";
-import Person from "@mui/icons-material/Person";
-import { Search, ShoppingCartOutlined } from "@material-ui/icons";
-import { Badge } from "@material-ui/core";
-import PersonAdd from "@mui/icons-material/PersonAdd";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import CloseIcon from '@mui/icons-material/Close';
+import FemaleIcon from '@mui/icons-material/Female';
+import Login from '@mui/icons-material/Login';
+import Logout from '@mui/icons-material/Logout';
+import MaleIcon from '@mui/icons-material/Male';
+import MenuIcon from '@mui/icons-material/Menu';
+import Person from '@mui/icons-material/Person';
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import {
   AppBar,
+  Badge,
   Box,
   Button,
   Container,
@@ -34,8 +35,13 @@ import LoginForm from "./LoginForm";
 import styled from "styled-components";
 import { green } from "@mui/material/colors";
 
-const signUpRoute = "/sign-up";
-const profileRoute = "/me";
+import { useCartContext } from '../context/cart';
+import { Search, ShoppingCartOutlined } from '@mui/icons-material';
+
+
+const cartRoute = '/my-cart';
+const signUpRoute = '/sign-up';
+const profileRoute = '/me';
 
 const genderPages = [
   {
@@ -52,10 +58,16 @@ const genderPages = [
 
 export default function NavBar() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { user } = useAuthContext();
+  const userIsLoggedIn = user != null;
 
   const [anchorElGenderMenu, setAnchorElGenderMenu] = useState(null);
 
   const genderMenuIsVisible = Boolean(anchorElGenderMenu);
+
+  const showCartButton = location.pathname !== cartRoute && userIsLoggedIn;
 
   const openGenderMenu = (event) => {
     setAnchorElGenderMenu(event.currentTarget);
@@ -100,7 +112,7 @@ export default function NavBar() {
             <Logo />
             <SearchContainer>
               <Input />
-              <Search />
+              <Search/>
             </SearchContainer>
             <Box sx={{ flexGrow: 1 }}></Box>
             {genderPages.map((page) => (
@@ -123,6 +135,8 @@ export default function NavBar() {
                 </Badge>
               </MenuItem>
             </Right>
+
+            {showCartButton && <CartButton />}
             <AccountButton />
           </Box>
           <Box
@@ -198,6 +212,44 @@ function Logo() {
     <Button onClick={() => navigate("/")} color="inherit">
       Home
     </Button>
+  );
+}
+
+function CartButton() {
+  const navigate = useNavigate();
+  const { cartItems, getCartItems } = useCartContext();
+  useEffect(() => {
+    getCartItems();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const cartItemsCount = useMemo(() => cartItems?.length ?? 0, [cartItems]);
+  const label = useMemo(() => {
+    if (cartItemsCount === 0) return 'no items';
+    if (cartItemsCount === 1) return '1 item';
+    return `${cartItemsCount} items`;
+  }, [cartItemsCount]);
+  return (
+    <Tooltip title="Cart">
+      <IconButton
+        size="large"
+        aria-label={`Cart with ${label}`}
+        aria-controls="cart"
+        onClick={() => navigate(cartRoute)}
+        color="inherit"
+      >
+        <Badge
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          badgeContent={cartItemsCount}
+          color="error"
+          overlap="circular"
+        >
+          <ShoppingCart />
+        </Badge>
+      </IconButton>
+    </Tooltip>
   );
 }
 
