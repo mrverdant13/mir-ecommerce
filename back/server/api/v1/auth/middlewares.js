@@ -28,6 +28,9 @@ exports.me = async (req, _, next) => {
     req.me = me;
     return next();
   } catch (err) {
+    if (err.message === 'jwt expired') {
+      return next(UnauthorizedErrorResponse('Session expired'));
+    }
     if (err.message === 'jwt malformed') {
       return next(UnauthorizedErrorResponse('Invalid access token'));
     }
