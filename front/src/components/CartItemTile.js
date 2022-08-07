@@ -42,7 +42,8 @@ function CartItemData({ item }) {
   const product = item.product;
   const { setProductInCart } = useCartContext();
   const [quantity, setQuantity] = useState(item.quantity);
-  const iconButtonSx = { fontSize: { xs: 12, sm: 'inherit' } };
+  const quantityButtonSx = { fontSize: { xs: 12, sm: 'inherit' } };
+  const actionButtonSx = { fontSize: { xs: 14, sm: 'inherit' } };
   const quantityIsEdited = Boolean(+quantity !== item.quantity);
   const resetQuantity = () => {
     setQuantity(item.quantity);
@@ -63,7 +64,7 @@ function CartItemData({ item }) {
       size="small"
       onClick={resetQuantity}
     >
-      <RestartAlt sx={iconButtonSx} />
+      <RestartAlt sx={actionButtonSx} />
     </IconButton>
   );
 
@@ -76,7 +77,7 @@ function CartItemData({ item }) {
       size="small"
       onClick={updateQuantity}
     >
-      <Check sx={iconButtonSx} />
+      <Check sx={actionButtonSx} />
     </IconButton>
   );
 
@@ -138,7 +139,7 @@ function CartItemData({ item }) {
             size="small"
             onClick={() => setQuantity(quantity ? +quantity - 1 : 0)}
           >
-            <Remove sx={iconButtonSx} />
+            <Remove sx={quantityButtonSx} />
           </IconButton>
           <InputBase
             sx={{
@@ -167,7 +168,7 @@ function CartItemData({ item }) {
             size="small"
             onClick={() => setQuantity(+quantity + 1)}
           >
-            <Add sx={iconButtonSx} />
+            <Add sx={quantityButtonSx} />
           </IconButton>
         </Box>
         <Box sx={{ flexGrow: 1 }} />
@@ -223,7 +224,7 @@ function CartItemData({ item }) {
             size="small"
             onClick={removeFromCart}
           >
-            <Delete sx={iconButtonSx} />
+            <Delete sx={actionButtonSx} />
           </IconButton>
         </Tooltip>
         <Button
