@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 
 import {
   getCartItems as getCartItemsReq,
@@ -14,7 +14,7 @@ export const CartProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const getCartItems = async () => {
+  const getCartItems = useCallback(async () => {
     console.debug('getCartItems');
     setLoading(true);
     setError(null);
@@ -25,20 +25,26 @@ export const CartProvider = ({ children }) => {
       setError(err.message ?? 'Unexpected error');
     }
     setLoading(false);
-  };
+  }, []);
 
-  const setProductInCart = async (productId, quantity) => {
-    console.debug('setProductInCart', productId, quantity);
-    setLoading(true);
-    setError(null);
-    try {
-      await setProductInCartReq(productId, quantity);
-    } catch (err) {
-      setError(err.message ?? 'Unexpected error');
-    }
-    setLoading(false);
-    await getCartItems();
-  };
+  const setProductInCart = useCallback(
+    async (productId, quantity) => {
+      console.debug('setProductInCart', '-', {
+        productId,
+        quantity,
+      });
+      setLoading(true);
+      setError(null);
+      try {
+        await setProductInCartReq(productId, quantity);
+      } catch (err) {
+        setError(err.message ?? 'Unexpected error');
+      }
+      setLoading(false);
+      await getCartItems();
+    },
+    [getCartItems],
+  );
 
   return (
     <>
