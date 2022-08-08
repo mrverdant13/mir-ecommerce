@@ -1,6 +1,9 @@
 import axios from 'axios';
 import {
     PRODUCTO_LISTAR,
+    GRUPO_PRODUCTO_LISTAR,
+    CATEGORIAS_GRUPOS,
+    ORDER_LIST
 } from './ProductoTypes';
 
 
@@ -12,11 +15,57 @@ export const listarProductos = () => async dispatch => {
         return dispatch({
             type: PRODUCTO_LISTAR,
             status: response.status,
-            productos: response.productos
+            productos: response.data
            
-        }
+        })
+    } catch (error) {
+        return dispatch(" ESTA FALLANDO");
+    }
+}
+
+export const listarGrupoProductos = () => async dispatch => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/products/groups`);
         
-        )
+        
+        return dispatch({
+            type: GRUPO_PRODUCTO_LISTAR,
+            status: response.status,
+            grupoProductos: response.data
+           
+        })
+    } catch (error) {
+        return dispatch(" ESTA FALLANDO");
+    }
+}
+
+export const categoriaGrupo = (id) => async dispatch => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/products/groups/${id}/categories`);
+        
+        
+        return dispatch({
+            type: CATEGORIAS_GRUPOS,
+            status: response.status,
+            grupoProductos: response.data
+           
+        })
+    } catch (error) {
+        return dispatch(" ESTA FALLANDO");
+    }
+}
+
+export const listaOrder = (id) => async dispatch => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/products/groups/${id}/categories`);
+        
+        
+        return dispatch({
+            type: ORDER_LIST,
+            status: response.status,
+            grupoProductos: response.data
+           
+        })
     } catch (error) {
         return dispatch(" ESTA FALLANDO");
     }

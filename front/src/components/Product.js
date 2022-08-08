@@ -69,17 +69,20 @@ const Icon = styled.div`
 
 
 const Product = ({ item }) => {
-
+console.log('d', item)
   
 
   return (
     <>
     
     <Container>
-      <h1>hola</h1>
+      
       <Circle />
-      <Image src={item?.products?.photos} />
-      <p>{item?.description}</p>
+      {item && (
+        item.photos.map((idx)=>{
+          return <Image src={idx} />
+        })
+      )}
       <Info>
         <Icon>
           <ShoppingCart />
