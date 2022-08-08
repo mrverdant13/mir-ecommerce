@@ -40,7 +40,7 @@ export default function CartItemTile({ item }) {
 
 function CartItemData({ item }) {
   const product = item.product;
-  const { setProductInCart } = useCartContext();
+  const { loading, setProductInCart } = useCartContext();
   const [quantity, setQuantity] = useState(item.quantity);
   const quantityButtonSx = { fontSize: { xs: 12, sm: 'inherit' } };
   const actionButtonSx = { fontSize: { xs: 14, sm: 'inherit' } };
@@ -58,7 +58,7 @@ function CartItemData({ item }) {
   const resetIconButton = (
     <IconButton
       color="primary"
-      disabled={!quantityIsEdited}
+      disabled={!quantityIsEdited || loading}
       sx={{ display: { xs: 'flex', sm: 'none' } }}
       aria-label="reset quantity"
       size="small"
@@ -71,7 +71,7 @@ function CartItemData({ item }) {
   const updateIconButton = (
     <IconButton
       color="primary"
-      disabled={!quantityIsEdited}
+      disabled={!quantityIsEdited || loading}
       sx={{ display: { xs: 'flex', sm: 'none' } }}
       aria-label="apply new quantity"
       size="small"
@@ -180,7 +180,7 @@ function CartItemData({ item }) {
         <Button
           aria-label="reset quantity"
           sx={{ display: { xs: 'none', sm: 'flex' } }}
-          disabled={!quantityIsEdited}
+          disabled={!quantityIsEdited || loading}
           variant="text"
           size="small"
           startIcon={<RestartAlt />}
@@ -202,7 +202,7 @@ function CartItemData({ item }) {
         <Button
           aria-label="apply new quantity"
           sx={{ display: { xs: 'none', sm: 'flex' } }}
-          disabled={!quantityIsEdited}
+          disabled={!quantityIsEdited || loading}
           variant="text"
           size="small"
           startIcon={<Check />}
@@ -219,6 +219,7 @@ function CartItemData({ item }) {
         <Tooltip title="Remove product">
           <IconButton
             color="primary"
+            disabled={loading}
             sx={{ display: { xs: 'flex', sm: 'none' } }}
             aria-label="remove product"
             size="small"
@@ -229,6 +230,7 @@ function CartItemData({ item }) {
         </Tooltip>
         <Button
           aria-label="remove product"
+          disabled={loading}
           sx={{ display: { xs: 'none', sm: 'flex' } }}
           variant="text"
           size="small"

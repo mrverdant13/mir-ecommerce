@@ -31,19 +31,29 @@ function CartPageContent() {
         Cart
       </Typography>
       <Divider />
-      {loading && (
-        <Container>
-          <Typography variant="h5" textAlign="center">
-            Loading
-          </Typography>
-        </Container>
-      )}
-      {error && (
-        <Typography variant="h5" textAlign="center">
-          {error}
-        </Typography>
-      )}
-      {cartItemsCount > 0 && (
+      {cartItems == null ? (
+        <>
+          {loading && (
+            <Container
+              sx={{
+                minHeight: 200,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Typography variant="h6" textAlign="center">
+                Loading
+              </Typography>
+            </Container>
+          )}
+          {error && (
+            <Typography variant="h5" textAlign="center">
+              {error}
+            </Typography>
+          )}
+        </>
+      ) : cartItemsCount > 0 ? (
         <>
           <Box sx={{ p: 2 }}>
             {cartItems.map((item, index) => (
@@ -56,7 +66,7 @@ function CartPageContent() {
           <Divider />
           <Box sx={{ display: 'flex', justifyContent: 'space-between', m: 2 }}>
             <Typography sx={{ fontWeight: 'bold' }} variant="body1">
-              Subtotal
+              Total
             </Typography>
             <Typography sx={{ fontWeight: 'bold' }} variant="body1">
               $
@@ -66,6 +76,19 @@ function CartPageContent() {
             </Typography>
           </Box>
         </>
+      ) : (
+        <Container
+          sx={{
+            minHeight: 200,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="h6" textAlign="center">
+            Cart is empty
+          </Typography>
+        </Container>
       )}
     </>
   );
