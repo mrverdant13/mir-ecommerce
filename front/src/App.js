@@ -6,11 +6,13 @@ import Typography from '@mui/material/Typography';
 import NavBar from './components/NavBar';
 import { AuthProvider } from './context/auth';
 import { CartProvider } from './context/cart';
+
 const CartPage = lazy(() => import('./pages/CartPage'));
 const Home = lazy(() => import('./pages/Home'));
 const NotFound = lazy(() => import('./pages/NotFound'));
-const SignUpPage = lazy(() => import('./pages/SignUpPage'));
+const OrdersPage = lazy(() => import('./pages/OrdersPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
+const SignUpPage = lazy(() => import('./pages/SignUpPage'));
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
               <Route path="/sign-up" element={<SignUpPage />} />
               <Route path="/me" element={<ProfilePage />} />
               <Route path="/my-cart" element={<CartPage />} />
+              <Route path="/my-orders" element={<OrdersPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

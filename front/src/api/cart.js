@@ -24,3 +24,15 @@ export const setProductInCart = async (productId, quantity) => {
     throw e;
   }
 };
+
+export const placeOrder = async () => {
+  try {
+    return await apiClient.post('/orders');
+  } catch (e) {
+    const status = e.response?.status;
+    if (status === 401) throw new Error('User not logged in');
+    if (status === 409) throw new Error('Cart is empty');
+    if (status === 500) throw new Error('Unexpected error');
+    throw e;
+  }
+};
