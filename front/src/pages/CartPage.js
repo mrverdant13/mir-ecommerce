@@ -1,7 +1,17 @@
 import React, { useEffect, useMemo } from 'react';
 
-import { Box, Card, Container, Divider, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  Container,
+  Divider,
+  Snackbar,
+  Typography,
+} from '@mui/material';
 
+import { useNavigate } from 'react-router-dom';
 import AuthGuard from '../components/AuthGuard';
 import CartItemTile from '../components/CartItemTile';
 import { useCartContext } from '../context/cart';
@@ -17,13 +27,27 @@ export default function CartPage() {
 }
 
 function CartPageContent() {
-  const { cartItems, loading, error, getCartItems } = useCartContext();
+  const navigate = useNavigate();
+  const {
+    cartItems,
+    orderPlaced,
+    loading,
+    error,
+    getCartItems,
+    placeOrder,
+    resetOrderPlacement,
+  } = useCartContext();
   const cartItemsCount = useMemo(() => cartItems?.length ?? 0, [cartItems]);
-
   useEffect(() => {
     getCartItems();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    resetOrderPlacement();
+    return () => {
+      resetOrderPlacement();
+    };
+  }, [getCartItems, resetOrderPlacement]);
+  useEffect(() => {
+    if (orderPlaced) navigate('/my-orders');
+  }, [orderPlaced, navigate]);
 
   const content = (
     <>
@@ -75,6 +99,19 @@ function CartPageContent() {
                 .reduce((partialSum, s) => partialSum + s, 0)}
             </Typography>
           </Box>
+          <Button
+            sx={{
+              mx: 2,
+              mb: 2,
+            }}
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={placeOrder}
+            disabled={loading}
+          >
+            <Typography variant="subtitle1">Place Order</Typography>
+          </Button>
         </>
       ) : (
         <Container
@@ -115,6 +152,20 @@ function CartPageContent() {
       >
         {content}
       </Card>
+      <Snackbar
+        open={orderPlaced}
+        onClose={resetOrderPlacement}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={resetOrderPlacement}
+          severity="success"
+          sx={{ width: '100%' }}
+        >
+          Order placed successfully
+        </Alert>
+      </Snackbar>
     </>
   );
 }
