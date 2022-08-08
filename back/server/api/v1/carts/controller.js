@@ -9,7 +9,10 @@ exports.getMyCart = async (req, res, next) => {
   try {
     const { _id } = req.me;
     const me = await User.findOne({ _id }).populate('cartItems.product');
-    return res.status(200).json(me.cartItems);
+    const items = me.cartItems.sort((a, b) =>
+      a.product.name.localeCompare(b.product.name),
+    );
+    return res.status(200).json(items);
   } catch (err) {
     return next(err);
   }

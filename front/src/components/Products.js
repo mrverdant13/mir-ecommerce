@@ -29,25 +29,24 @@ const Products = () => {
   }, []);
 
   return (
-    <>
+    <Container>
       {/* {productoList.map((item, idx) =>(
             // <Product item={item} key={idx}/>
             <h1>
               {item.total}
             </h1>
             ))} */}
-      {productoList && (
-          <Container>
-
+      {productoList && 
+        <Container>
             {productoList.products.map((item) => {
               return (
                 <Product item={item} key={item._id}/>
               )
             })}
-          </Container>
+        </Container>
         
-      )}
-    </>
+      }
+    </Container>
   );
 };
 
