@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useState } from 'react';
 
 import {
   getCartItems as getCartItemsReq,
+  placeOrder as placeOrderReq,
   setProductInCart as setProductInCartReq,
 } from '../api/cart';
 
@@ -11,6 +12,7 @@ export const useCartContext = () => useContext(cartContext);
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(null);
+  const [orderPlaced, setOrderPlaced] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -46,15 +48,37 @@ export const CartProvider = ({ children }) => {
     [getCartItems],
   );
 
+  const placeOrder = useCallback(async () => {
+    console.debug('placeOrder');
+    setLoading(true);
+    setError(null);
+    try {
+      await placeOrderReq();
+      setOrderPlaced(true);
+    } catch (err) {
+      setError(err.message ?? 'Unexpected error');
+    }
+    setLoading(false);
+    await getCartItems();
+  }, [getCartItems]);
+
+  const resetOrderPlacement = useCallback(() => {
+    console.debug('resetOrderPlacement');
+    setOrderPlaced(false);
+  }, []);
+
   return (
     <>
       <cartContext.Provider
         value={{
           cartItems,
+          orderPlaced,
           loading,
           error,
           getCartItems,
           setProductInCart,
+          placeOrder,
+          resetOrderPlacement,
         }}
       >
         {children}
