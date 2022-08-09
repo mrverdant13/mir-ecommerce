@@ -8,6 +8,7 @@ import {
   Container,
   Divider,
   Snackbar,
+  Stack,
   Typography,
 } from '@mui/material';
 
@@ -51,9 +52,20 @@ function CartPageContent() {
 
   const content = (
     <>
-      <Typography sx={{ mx: 2, my: 1 }} variant="h5">
-        Cart
-      </Typography>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        sx={{ mx: 2, my: 1 }}
+      >
+        <Typography variant="h5">Cart</Typography>
+        <Button
+          variant="text"
+          size="small"
+          onClick={() => navigate('/my-orders')}
+        >
+          See my orders
+        </Button>
+      </Stack>
       <Divider />
       {cartItems == null ? (
         <>
